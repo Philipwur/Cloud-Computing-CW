@@ -36,7 +36,7 @@ class movie_review(db.Model):
                    primary_key=True)
   
   u_id = db.Column(db.Integer,
-                       db.ForeignKey("user.u_id"))
+                   db.ForeignKey("user.u_id"))
   
   movie_name = db.Column(db.String(100), 
                          nullable=False)
@@ -48,11 +48,12 @@ class movie_review(db.Model):
                    nullable=False)
   
   score = db.Column(db.Float,
-                   nullable=False)
+                    nullable=False)
   
   user = db.relationship("user", backref = db.backref("movie_review"))
   
-  __table_args__ = {db.UniqueConstraint("movie_name", "u_id")}
+  __table_args__ = (db.UniqueConstraint("movie_name", "u_id", name="user_review"),
+                   )
   
   def __repr__(self):
     return '' % (self.l_id, self.u_id)
@@ -137,7 +138,7 @@ def user_home(username):
         db.session.add(list_entry)
         db.session.commit()
         user_list = movie_review.query.filter_by(username=username).all()
-
+        return user_list
     return render_template("user_home.html", username=username, movie=movie, director=director, year=year)
 
 if __name__ == '__main__':
