@@ -8,9 +8,6 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
 from userDB.setupDB import user
-
-from database.users import User
-from database.movie_list import movie_list
 from flask_restful import Api
 
 app = Flask(__name__)
@@ -22,9 +19,53 @@ app.config['PROPOGATE_EXCEPTIONS'] = True
 api = Api(app)
 db = SQLAlchemy(app)
 
-api.add_resource(User, '/auth.db')
+api.add_resource(user, '/auth.db')
 api.add_resource(movie_list, '/list.db')
 
+class movie_list(db.model):
+  
+  listname = "movie_list"
+  
+  l_id = db.Column(db.Integer, 
+                 primary_key=True)
+  
+  username_reviewer = db.Column(db.String(100), 
+                                unique=True, 
+                                nullable=False)
+  
+  movie_name = db.Column(db.String(100), 
+                         nullable=False)
+  
+  director = db.Column(db.String(100), 
+                       nullable=False)
+  
+  year = db.Column(db.int(4), 
+                   nullable=False)
+  
+  score = db.Column(db.float(),
+                    nullable=True)
+  
+  def __repr__(self):
+        return '' % self.id
+
+class user(db.Model):
+  
+  table_name = "user_list"
+  
+  uid = db.Column(db.Integer, 
+                  primary_key=True)
+  
+  username = db.Column(db.String(100), 
+                       unique=True, 
+                       nullable=False)
+  
+  pass_hash = db.Column(db.String(100), 
+                        nullable=False)
+
+  def __repr__(self):
+    return '' % self.username
+
+    
 @app.route("/signup/", methods=["GET", "POST"])
 def signup():
     """
@@ -48,7 +89,7 @@ def signup():
         # Returns salted pwd hash in format : method$salt$hashedvalue
         hashed_pwd = generate_password_hash(password, 'sha256')
 
-        new_user = User(username=username, pass_hash=hashed_pwd)
+        new_user = user(username=username, pass_hash=hashed_pwd)
         db.session.add(new_user)
 
         try:
@@ -84,7 +125,7 @@ def login():
             username = username.strip()
             password = password.strip()
 
-        user = User.query.filter_by(username=username).first()
+        user = user.query.filter_by(username=username).first()
 
         if user and check_password_hash(user.pass_hash, password):
             session[username] = True
