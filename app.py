@@ -68,13 +68,7 @@ class user(db.Model):
     
 @app.route("/signup/", methods=["GET", "POST"])
 def signup():
-    """
-    Implements signup functionality. Allows username and password for new user.
-    Hashes password with salt using werkzeug.security.
-    Stores username and hashed password inside database.
-    Username should to be unique else raises sqlalchemy.exc.IntegrityError.
-    """
-
+  
     if request.method == "POST":
         username = request.form['username']
         password = request.form['password']
@@ -107,12 +101,6 @@ def signup():
 @app.route("/", methods=["GET", "POST"])
 @app.route("/login/", methods=["GET", "POST"])
 def login():
-    """
-    Provides login functionality by rendering login form on get request.
-    On post checks password hash from db for given input username and password.
-    If hash matches redirects authorized user to home page else redirect to
-    login page with error message.
-    """
 
     if request.method == "POST":
         username = request.form['username']
