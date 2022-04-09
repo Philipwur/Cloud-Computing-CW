@@ -105,11 +105,12 @@ def user_home(username):
         
     if request.method == "POST":
         
+        rating = request.form["rating"]
         list_entry = movie_list(username_reviewer = username, 
                                 movie_name = movie,
                                 director = director,
                                 year = year,
-                                score = score)
+                                score = rating)
         
         db.session.add(list_entry)
         db.session.commit()
