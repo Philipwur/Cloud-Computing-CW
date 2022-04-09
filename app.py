@@ -11,51 +11,19 @@ from userDB.setupDB import user
 from flask_restful import Api
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///DB'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['PROPOGATE_EXCEPTIONS'] = True
-#app.config['SECRET_KEY'] = '{Your Secret Key}'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
 
-api = Api(app)
 db = SQLAlchemy(app)
-
-api.add_resource(user, '/auth.db/')
-api.add_resource(movie_list, '/list.db/')
-
-class movie_list(db.model):
-  
-  listname = "movie_list"
-  
-  l_id = db.Column(db.Integer, 
-                 primary_key=True)
-  
-  username_reviewer = db.Column(db.String(100), 
-                                unique=True, 
-                                nullable=False)
-  
-  movie_name = db.Column(db.String(100), 
-                         nullable=False)
-  
-  director = db.Column(db.String(100), 
-                       nullable=False)
-  
-  year = db.Column(db.int(4), 
-                   nullable=False)
-  
-  score = db.Column(db.float(),
-                    nullable=True)
-  
-  def __repr__(self):
-        return '' % self.id
 
 class user(db.Model):
   
-  table_name = "user_list"
+  __table_name__ = "user_list"
   
-  uid = db.Column(db.Integer, 
-                  primary_key=True)
+  u_id = db.Column(db.Integer,
+                   autoincrement=True,
+                   primary_key=True)
   
-  username = db.Column(db.String(100), 
+  user_name = db.Column(db.String(100), 
                        unique=True, 
                        nullable=False)
   
@@ -63,12 +31,41 @@ class user(db.Model):
                         nullable=False)
 
   def __repr__(self):
-    return '' % self.username
+    return '' % self.u_id
 
-    
+class movie_review(db.model):
+  
+  __table_name__ = "movie_review"
+  
+  __table_args__ = db.UniqueConstraint("movie_name", "user_id")
+  
+  l_id = db.Column(db.Integer, 
+                   autoincrement=True,
+                   primary_key=True)
+  
+  u_id = db.Column(db.Integer,
+                       db.ForeignKey("user.u_id"))
+  
+  movie_name = db.Column(db.String(100), 
+                         nullable=False)
+  
+  director = db.Column(db.String(100), 
+                       nullable=False)
+  
+  year = db.Column(db.int(4),
+                   nullable=False)
+  
+  score = db.Column(db.float,
+                   nullable=False)
+  
+  user = db.relationship("user", backref = db.backref("movie_review"))
+  
+  def __repr__(self):
+    return '' % (self.l_id, self.u_id)
+  
+
 @app.route("/signup/", methods=["GET", "POST"])
 def signup():
-  
     if request.method == "POST":
         username = request.form['username']
         password = request.form['password']
@@ -135,16 +132,17 @@ def user_home(username):
     if request.method == "POST":
         
         rating = request.form["rating"]
-        list_entry = movie_list(username_reviewer = username, 
-                                movie_name = movie,
+        if not (rating):
+            flash("rating cannot be empty")
+            
+        list_entry = movie_list(movie_name = movie,
                                 director = director,
                                 year = year,
                                 score = rating)
         
         db.session.add(list_entry)
         db.session.commit()
-        
-        return [movie, director, year]
+        user_list = movie_review.query.filter_by(u_id=u_id).all()
 
     return render_template("user_home.html", username=username, movie=movie, director=director, year=year)
 
