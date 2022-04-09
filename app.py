@@ -106,9 +106,9 @@ def login():
             username = username.strip()
             password = password.strip()
 
-        user = user.query.filter_by(user_name=username).first()
+        user_login = user.query.filter_by(user_name=username).first()
 
-        if user and check_password_hash(user.pass_hash, password):
+        if user_login and check_password_hash(user.pass_hash, password):
             session[username] = True
             return redirect(url_for("user_home", username=username))
             flash("Invalid username or password.")
@@ -128,9 +128,7 @@ def user_home(username):
     if request.method == "POST":
         
         rating = request.form["rating"]
-        if not (rating):
-            flash("rating cannot be empty")
-            
+        
         list_entry = movie_review(movie_name = str(movie),
                                 director = str(director),
                                 year = int(year),
