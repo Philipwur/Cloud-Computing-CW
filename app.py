@@ -6,24 +6,24 @@ from flask_sqlalchemy import sqlalchemy, SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
+
 from userDB.setupDB import user
+
+from database.user import User
 from database.movie_list import movie_list
+from flask_restful import Api
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///userDB//auth.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///DB'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = '{Your Secret Key}'
+app.config['PROPOGATE_EXCEPTIONS'] = True
+#app.config['SECRET_KEY'] = '{Your Secret Key}'
 
+api = Api(app)
 db = SQLAlchemy(app)
 
-class User(db.Model):
-    uid = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), unique=True, nullable=False)
-    pass_hash = db.Column(db.String(100), nullable=False)
-
-    def __repr__(self):
-        return '' % self.username
-
+api.add_resource(User, '/auth.db')
+api.add_resource(movie_list, '/list.db')
 
 @app.route("/signup/", methods=["GET", "POST"])
 def signup():
