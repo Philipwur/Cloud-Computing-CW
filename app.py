@@ -110,7 +110,7 @@ def login():
             username = username.strip()
             password = password.strip()
 
-        user = user.query.filter_by(username=username).first()
+        user = user.query.filter_by(user_name=username).first()
 
         if user and check_password_hash(user.pass_hash, password):
             session[username] = True
