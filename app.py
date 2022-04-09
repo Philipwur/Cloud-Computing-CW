@@ -80,7 +80,7 @@ def signup():
         # Returns salted pwd hash in format : method$salt$hashedvalue
         hashed_pwd = generate_password_hash(password, 'sha256')
 
-        new_user = user(username=username, pass_hash=hashed_pwd)
+        new_user = user(user_name=username, pass_hash=hashed_pwd)
         db.session.add(new_user)
 
         try:
