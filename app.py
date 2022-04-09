@@ -19,8 +19,8 @@ app.config['PROPOGATE_EXCEPTIONS'] = True
 api = Api(app)
 db = SQLAlchemy(app)
 
-api.add_resource(user, '/auth.db')
-api.add_resource(movie_list, '/list.db')
+api.add_resource(user, '/auth.db/')
+api.add_resource(movie_list, '/list.db/')
 
 class movie_list(db.model):
   
