@@ -141,5 +141,6 @@ def user_home(username):
         return user_list
     return render_template("user_home.html", username=username, movie=movie, director=director, year=year)
 
+  db.create_all()
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
