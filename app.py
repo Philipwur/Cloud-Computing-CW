@@ -135,7 +135,7 @@ def user_home(username):
         if not (rating):
             flash("rating cannot be empty")
             
-        list_entry = movie_list(movie_name = movie,
+        list_entry = movie_review(movie_name = movie,
                                 director = director,
                                 year = year,
                                 score = rating)
