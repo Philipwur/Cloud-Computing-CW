@@ -10,6 +10,7 @@ from flask_restful import Api
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
+app.config['SECRET_KEY'] = '{Your Secret Key}'
 
 db = SQLAlchemy(app)
 
