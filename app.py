@@ -9,7 +9,7 @@ from sqlalchemy import create_engine
 
 from userDB.setupDB import user
 
-from database.user import User
+from database.users import User
 from database.movie_list import movie_list
 from flask_restful import Api
 
