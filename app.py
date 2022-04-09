@@ -37,7 +37,7 @@ class movie_review(db.model):
   
   __table_name__ = "movie_review"
   
-  __table_args__ = (db.UniqueConstraint("movie_name", "user_id"))
+  __table_args__ = {db.UniqueConstraint("movie_name", "u_id")}
   
   l_id = db.Column(db.Integer, 
                    autoincrement=True,
