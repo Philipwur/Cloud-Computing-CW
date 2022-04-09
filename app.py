@@ -33,7 +33,7 @@ class user(db.Model):
   def __repr__(self):
     return '' % self.u_id
 
-class movie_review(db.model):
+class movie_review(db.Model):
   
   __table_name__ = "movie_review"
   
@@ -50,7 +50,7 @@ class movie_review(db.model):
   director = db.Column(db.String(100), 
                        nullable=False)
   
-  year = db.Column(db.Integer(4),
+  year = db.Column(db.Integer,
                    nullable=False)
   
   score = db.Column(db.Float,
