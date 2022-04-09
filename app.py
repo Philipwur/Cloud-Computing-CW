@@ -17,7 +17,7 @@ db = SQLAlchemy(app)
 
 class user(db.Model):
   
-  __table_name__ = "user_list"
+  __table_name__ = "user"
   
   u_id = db.Column(db.Integer,
                    autoincrement=True,
@@ -35,7 +35,7 @@ class user(db.Model):
 
 class movie_review(db.model):
   
-  __table_name__ = "movie_review"
+  __table_name__ = "movie"
   
   __table_args__ = {db.UniqueConstraint("movie_name", "u_id")}
   
