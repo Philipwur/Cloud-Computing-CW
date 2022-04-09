@@ -130,10 +130,10 @@ def user_home(username):
         if not (rating):
             flash("rating cannot be empty")
             
-        list_entry = movie_review(movie_name = movie,
-                                director = director,
-                                year = year,
-                                score = rating)
+        list_entry = movie_review(movie_name = str(movie),
+                                director = str(director),
+                                year = int(year),
+                                score = float(rating))
         
         db.session.add(list_entry)
         db.session.commit()
