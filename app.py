@@ -102,9 +102,8 @@ def user_home(username):
         director = response[0].get('director')
         year = response[0].get('year')
         
-        movie1, director1, year1 = str(movie), str(director), str(year)
     if request.method == "POST":
-        return [movie1,director1,year1]
+        return [movie, director, year]
 
     return render_template("user_home.html", username=username, movie=movie, director=director, year=year)
 
