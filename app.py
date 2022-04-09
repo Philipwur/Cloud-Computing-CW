@@ -142,7 +142,7 @@ def user_home(username):
         
         db.session.add(list_entry)
         db.session.commit()
-        user_list = movie_review.query.filter_by(u_id=u_id).all()
+        user_list = movie_review.query.filter_by(username=username).all()
 
     return render_template("user_home.html", username=username, movie=movie, director=director, year=year)
 
