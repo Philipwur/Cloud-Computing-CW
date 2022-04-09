@@ -37,8 +37,6 @@ class movie_review(db.model):
   
   __table_name__ = "movie_review"
   
-  __table_args__ = {db.UniqueConstraint("movie_name", "u_id")}
-  
   l_id = db.Column(db.Integer, 
                    autoincrement=True,
                    primary_key=True)
@@ -59,6 +57,8 @@ class movie_review(db.model):
                    nullable=False)
   
   user = db.relationship("user", backref = db.backref("movie_review"))
+  
+  __table_args__ = {db.UniqueConstraint("movie_name", "u_id")}
   
   def __repr__(self):
     return '' % (self.l_id, self.u_id)
