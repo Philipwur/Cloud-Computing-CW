@@ -7,6 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from userDB.setupDB import user
+from database.movie_list import movie_list
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///userDB//auth.db'
@@ -103,6 +104,16 @@ def user_home(username):
         year = response[0].get('year')
         
     if request.method == "POST":
+        
+        list_entry = movie_list(username_reviewer = username, 
+                                movie_name = movie,
+                                director = director,
+                                year = year,
+                                score = score)
+        
+        db.session.add(list_entry)
+        db.session.commit()
+        
         return [movie, director, year]
 
     return render_template("user_home.html", username=username, movie=movie, director=director, year=year)
