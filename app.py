@@ -15,8 +15,6 @@ db = SQLAlchemy(app)
 
 class user(db.Model):
   
-  __table_name__ = "user"
-  
   u_id = db.Column(db.Integer,
                    autoincrement=True,
                    primary_key=True)
@@ -32,8 +30,6 @@ class user(db.Model):
     return '' % self.u_id
 
 class movie_review(db.Model):
-  
-  __table_name__ = "movie_review"
   
   l_id = db.Column(db.Integer, 
                    autoincrement=True,
