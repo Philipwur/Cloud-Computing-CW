@@ -52,10 +52,10 @@ class movie_review(db.model):
   director = db.Column(db.String(100), 
                        nullable=False)
   
-  year = db.Column(db.int(4),
+  year = db.Column(db.Integer(4),
                    nullable=False)
   
-  score = db.Column(db.float,
+  score = db.Column(db.Float,
                    nullable=False)
   
   user = db.relationship("user", backref = db.backref("movie_review"))
