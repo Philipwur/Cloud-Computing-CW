@@ -35,7 +35,7 @@ class user(db.Model):
 
 class movie_review(db.model):
   
-  __table_name__ = "movie"
+  __table_name__ = "movie_review"
   
   __table_args__ = {db.UniqueConstraint("movie_name", "u_id")}
   
