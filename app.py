@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, jsonify, json, url_for, abort, redirect, session,flash
 import requests
-from cassandra.cluster import Cluster
-from cassandra.cqlengine import connection
-from flask_sqlalchemy import sqlalchemy, SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
