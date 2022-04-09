@@ -21,7 +21,7 @@ class user(db.Model):
                    autoincrement=True,
                    primary_key=True)
   
-  user_name = db.Column(db.String(100), 
+  username = db.Column(db.String(100), 
                        unique=True, 
                        nullable=False)
   
@@ -77,7 +77,7 @@ def signup():
         # Returns salted pwd hash in format : method$salt$hashedvalue
         hashed_pwd = generate_password_hash(password, 'sha256')
 
-        new_user = user(user_name=username, pass_hash=hashed_pwd)
+        new_user = user(username=username, pass_hash=hashed_pwd)
         db.session.add(new_user)
 
         try:
@@ -107,11 +107,12 @@ def login():
             username = username.strip()
             password = password.strip()
 
-        user_login = user.query.filter_by(user_name=username).first()
+        user_login = user.query.filter_by(username=username).first()
 
         if user_login and check_password_hash(user.pass_hash, password):
             session[username] = True
             return redirect(url_for("user_home", username=username))
+          else:
             flash("Invalid username or password.")
 
     return render_template("login_form.html")
