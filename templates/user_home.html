@@ -90,12 +90,13 @@
     		<td>{{item.director}}</td>
 		<td>{{item.year}}</td>
 		<td>{{item.review}}</td>
-		<td><form id = "new_score" action = "{{url_for('user_home',username = username)}}" method = "post">
-   		<input type ="number" name="new_rating" min= "0" max="10" step="0.1">
-		<input type ="hidden" name="old_movie" value="{{item.movie}}" />
-		<input type ="hidden" name="old_director" value="{{item.director}}" />
-		<input type ="hidden" name="old_year" value="{{item.review}}" />
-		<input type="submit" id="submit" text="Submit"/></form></td>
+		<td><form action = "{{url_for('user_home',username = username)}}" method = "post">
+   		<input type = "number" name="new_rating" min= "0" max="10" step="0.1">
+		<input type = "hidden" name="movie" value="{{item.movie}}" />
+		<input type = "submit" id="submit" text="Submit"/></form></td>
+		<td><form action = "{{url_for('user_home', username = username)}}" method = "post">
+    		<input type = "hidden" name = "delete_request" value="{{item.movie}}"/>
+  		<input type = "submit" id = "submit" text = "Submit"/></form></td>
 	</tr>
 {% endfor %}
 </table>
