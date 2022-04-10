@@ -80,7 +80,7 @@ Post request collects username and password,
 determines whether the username has been taken or whether the fields are empty
 generates password hash and appends user to the database. 
 '''
-@app.route("/signup/", methods=["POST"])
+@app.route("/signup/", methods=["GET","POST"])
 def signup():
     if request.method == "POST":
         username = request.form['username'].strip()
