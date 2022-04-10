@@ -65,13 +65,13 @@
                 <td> {{director}} </td>
                 <td> {{year}} </td>
    		<td><input type ="number" min= "0" max="10" step="0.1" name="rating"></td>
-                <td><form action="{{url_for('user_home', username = username, movie = movie, director = director, year = year)}}" method="post"><input type ="submit",value="Submit"></form></td>	
+                <td><form action="{{url_for('user_home', username = username)}}" method="post"><input type ="submit",value="Submit"></form></td>	
 	</tr>
 
       </table>
       <div>
         <button type="button" class="btn btn-default btn-sm">
-          <span class="glyphicon glyphicon-log-out"></span><a href="./index.html"> Log out</a>
+          <span class="glyphicon glyphicon-log-out"></span><a href="/login/"> Log out</a>
         </button>
     </div>
 </body>
