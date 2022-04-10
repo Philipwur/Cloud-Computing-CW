@@ -4,9 +4,6 @@ from flask_sqlalchemy import sqlalchemy, SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-import ssl
-context = ssl.SSLContext()
-context.load_cert_chain('fullchain.pem', 'privkey.pem')
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
@@ -202,4 +199,4 @@ def create_tables():
     db.create_all()
     
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True, ssl_context=context)
+    app.run(host='0.0.0.0', port=8080, debug=True, ssl_context= ("cert.pem", "key.pem")
