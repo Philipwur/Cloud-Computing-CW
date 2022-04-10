@@ -5,8 +5,12 @@ A simple and fun web app which allows users to generate random Owen Willson movi
 hopefully this project can make you go:
 ![Alt Text](https://thumbs.gfycat.com/GoodnaturedUglyGreendarnerdragonfly-max-1mb.gif)
 
+# REST API Functions
+
+The REST API is based on Python's Flask module and SQLAlchemy is used for object-relational mapping. 
+
 This web app features:
-1. User accounts (with private user lists)
+1. User accounts (with personal user functions)
 3. Hashed passwords
-4. A Persistent cloud database (GCP)
+4. A Persistent cloud database ( usingGCP)
 5. Dynamically generated REST API
