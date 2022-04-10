@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request, jsonify, json, url_for, abort, redirect, session,flash
 import requests
+import pyopenssl
 from flask_sqlalchemy import sqlalchemy, SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
