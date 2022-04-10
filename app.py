@@ -4,8 +4,8 @@ from flask_sqlalchemy import sqlalchemy, SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
+from flask_migrate import Migrate
 
-from userDB.setupDB import user
 from flask_restful import Api
 
 app = Flask(__name__)
@@ -14,111 +14,93 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '{Your Secret Key}'
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
-class user(db.Model):
+class User(db.Model):
   
-  u_id = db.Column(db.Integer,
-                   autoincrement=True,
+  u_id = db.Column(db.Integer, 
                    primary_key=True)
   
-  username = db.Column(db.String(100), 
-                       unique=True, 
+  username = db.Column(db.String(64), 
                        nullable=False)
   
-  pass_hash = db.Column(db.String(100), 
-                        nullable=False)
-
-  def __repr__(self):
-    return '' % self.u_id
-
-class movie_review(db.Model):
+  password = db.Column(db.String(64),
+                      nullable=True)
+  @classmethod
+  def find_user(cls, username):
+    return cls.query.filter_by(username = username).first()
   
+  def generate_pass_hash(self, password):
+    self.password = generate_password_hash(password)
+  
+  def check_pass(self, _password):
+    return check_password_hash(self.password, _password)
+  
+class Movie_review(db.Model):
+
   l_id = db.Column(db.Integer, 
-                   autoincrement=True,
                    primary_key=True)
   
-  u_id = db.Column(db.Integer,
-                   db.ForeignKey("user.u_id"))
+  username = db.Column(db.String(64))
   
-  movie_name = db.Column(db.String(100), 
-                         nullable=False)
+  movie = db.Column(db.String(64))
   
-  director = db.Column(db.String(100), 
-                       nullable=False)
+  director = db.Column(db.String(64))
   
-  year = db.Column(db.Integer,
-                   nullable=False)
+  year = db.Column(db.Integer)
   
-  score = db.Column(db.Float,
-                    nullable=False)
+  review = db.Column(db.Float(10))
   
-  user = db.relationship("user", backref = db.backref("movie_review"))
-  
-  __table_args__ = (db.UniqueConstraint("movie_name", "u_id", name="user_review"),
-                   )
-  
-  def __repr__(self):
-    return '' % (self.l_id, self.u_id)
-  
+  @classmethod
+  def find_review(cls, username, movie):
+      return cls.query.filter_by(username = username, movie = movie).first()
+    
+  @classmethod
+  def show_list(cls, username):
+      return cls.query.filter_by(username = username)
 
+    
 @app.route("/signup/", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form['username'].strip()
+        password = request.form['password'].strip()
 
-        if not (username and password):
-            flash("Username or Password cannot be empty")
-            return redirect(url_for('signup'))
+        if User.find_user(username = username) or not (username and password):
+            flash("Username already Exists")
         else:
-            username = username.strip()
-            password = password.strip()
-
-        # Returns salted pwd hash in format : method$salt$hashedvalue
-        hashed_pwd = generate_password_hash(password, 'sha256')
-
-        new_user = user(username=username, pass_hash=hashed_pwd)
-        db.session.add(new_user)
-
-        try:
-            db.session.commit()
-        except sqlalchemy.exc.IntegrityError:
-            flash("Username {u} is not available.".format(u=username))
-            return redirect(url_for('signup'))
-
-        flash("User account has been created.")
-        return redirect(url_for("login"))
-
+          new_user = User(username = username)
+          new_user.generate_pass_hash(password = password)
+          db.session.add(new_user)
+          db.session.commit()
+          flash("User added")
+          return redirect(url_for("login"))
+        
     return render_template("signup.html")
-
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/login/", methods=["GET", "POST"])
 def login():
 
     if request.method == "POST":
-        username = request.form['username']
-        password = request.form['password']
-
-        if not (username and password):
-            flash("Username or Password cannot be empty.")
-            return redirect(url_for('login'))
-        else:
-            username = username.strip()
-            password = password.strip()
-
-        user_login = user.query.filter_by(username=username).first()
-
-        if user_login and check_password_hash(user.pass_hash, password):
+        username = request.form['username'].strip()
+        password = request.form['password'].strip()
+        
+        login_user = User.find_user(username = username)
+        
+        if login_user and login_user.check_pass(_password = password):
             session[username] = True
-            return redirect(url_for("user_home", username=username))
-          else:
-            flash("Invalid username or password.")
+            return redirect(url_for("user_home", username = username))
+        else:
+            flash("Invalid login")
 
     return render_template("login_form.html")
-
+                          
 @app.route("/user/<username>/", methods = ["GET", "POST"])
 def user_home(username):
+  
+    user_list = Movie_review.show_list(username = username)
+    
     if request.method == "GET":
         url = "https://owen-wilson-wow-api.herokuapp.com/wows/random"
         resp = requests.get(url)
@@ -127,21 +109,56 @@ def user_home(username):
         director = response[0].get('director')
         year = response[0].get('year')
         
-    if request.method == "POST":
+    if request.method == "POST" and "rating" in request.form:
         
-        rating = request.form["rating"]
+        movie = request.form['movie']
+        director = request.form['director']
+        year = request.form['year']
+        score = request.form['rating']
         
-        list_entry = movie_review(movie_name = str(movie),
-                                director = str(director),
-                                year = int(year),
-                                score = float(rating))
+        review = Movie_review(username = username,
+                              movie = movie,
+                              director = director,
+                              year = year,
+                              review = score)
         
-        db.session.add(list_entry)
-        db.session.commit()
-        user_list = movie_review.query.filter_by(username=username).all()
-        return user_list
-    return render_template("user_home.html", username=username, movie=movie, director=director, year=year)
+        if Movie_review.find_review(username=username, movie=movie):
+            flash("you have already reviewed this movie")
 
-db.create_all()
+        else:
+          db.session.add(review)
+          db.session.commit()
+          return redirect(url_for("user_home", username = username))
+        
+    if request.method == "POST" and "new_rating" in request.form:
+      
+        new_score = request.form['new_rating']
+        movie = request.form['movie']
+        movie_review = Movie_review.find_review(username = username, 
+                                                movie = movie)
+        movie_review.review = new_score
+        db.session.commit()
+        return redirect(url_for("user_home", username = username))
+      
+    if request.method == "POST" and "delete_request" in request.form:
+      
+        delete_request = request.form['delete_request']
+        delete_review = Movie_review.find_review(username = username, 
+                                                 movie = delete_request)
+        db.session.delete(delete_review)
+        db.session.commit()
+        return redirect(url_for("user_home", username = username))
+      
+    return render_template("user_home.html", 
+                           username = username, 
+                           movie = movie, 
+                           director = director, 
+                           year = year, 
+                           user_list = user_list)
+
+@app.before_first_request
+def create_tables():
+    db.create_all()
+    
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
