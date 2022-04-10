@@ -52,7 +52,8 @@
   <form class=random action="{{url_for('user_home',username = username)}}" method="get">
   	<input type="submit" value="WOW!" />
   </form>
-<table border = 3>
+</table>
+	<table border = 3>
 	<tr>
 		<th> Movie  </th>
 		<th> Director </th>
@@ -64,11 +65,40 @@
                 <td> {{movie}}  </td>
                 <td> {{director}} </td>
                 <td> {{year}} </td>
-   		<td><input type ="number" min= "0" max="10" step="0.1" name="rating"></td>
-                <td><form action="{{url_for('user_home', username = username)}}" method="post"><input type ="submit",value="Submit"></form></td>	
+		<td><form name = "list_entry" action = "{{url_for('user_home',username = username)}}" method = "post">
+   		<input type ="number" name="rating" min= "0" max="10" step="0.1">
+		<input type ="hidden" name="movie" value="{{movie}}" />
+		<input type ="hidden" name="director" value="{{director}}" />
+		<input type ="hidden" name="year" value="{{year}}" /></td>
+		<td> <input type="submit" id="submit" text="Submit"/></form></td>
 	</tr>
+</table>
+<h2>{{username.title()}}'s List</h2>
 
-      </table>
+<table border = 3>
+	<tr>
+		<th> Movie  </th>
+		<th> Director </th>
+                <th> Year </th>
+                <th> Score </th>
+                <th> Edit </th>
+		<th> Remove </th>
+	</tr>
+{% for item in user_list %}
+	<tr>
+    		<td>{{item.movie}}</td>
+    		<td>{{item.director}}</td>
+		<td>{{item.year}}</td>
+		<td>{{item.review}}</td>
+		<td><form id = "new_score" action = "{{url_for('user_home',username = username)}}" method = "post">
+   		<input type ="number" name="new_rating" min= "0" max="10" step="0.1">
+		<input type ="hidden" name="old_movie" value="{{item.movie}}" />
+		<input type ="hidden" name="old_director" value="{{item.director}}" />
+		<input type ="hidden" name="old_year" value="{{item.review}}" />
+		<input type="submit" id="submit" text="Submit"/></form></td>
+	</tr>
+{% endfor %}
+</table>
       <div>
         <button type="button" class="btn btn-default btn-sm">
           <span class="glyphicon glyphicon-log-out"></span><a href="/login/"> Log out</a>
