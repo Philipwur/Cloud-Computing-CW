@@ -2,7 +2,7 @@
 
 A simple and fun web app which allows users to generate random Owen Willson movies and rate them. Rating the moviews will add them to their own private user-specific lists which they can amend by changing scores and deleting entries. This webapp makes use of the Owen Wilson API: https://owen-wilson-wow-api.herokuapp.com/wows/random
 
-hopefully this project can make you go:
+Hopefully this project will make you go:
 ![Alt Text](https://thumbs.gfycat.com/GoodnaturedUglyGreendarnerdragonfly-max-1mb.gif)
 
 # REST API Functions
@@ -16,4 +16,4 @@ This web app features:
 5. Dynamically generated REST API
 
 #RESTful Services
-## 1
+#### 1 GET
