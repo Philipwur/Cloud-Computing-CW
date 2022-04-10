@@ -107,11 +107,18 @@
           <label for="psw"><b>Password</b></label>
           <input type="password" id="password" placeholder="Enter Password" name="password" /> 
           <button type="submit" value="Log In">Login</a></button>
-            
-
           
         </div>
     </form>
+    {% with messages = get_flashed_messages() %}
+     {% if messages %}
+       <ul class=flashes>
+       {% for message in messages %}
+         <li>{{ message }}</li>
+       {% endfor %}
+       </ul>
+     {% endif %}
+   {% endwith %}
     </body>
 
 </html>
