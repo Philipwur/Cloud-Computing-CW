@@ -16,6 +16,14 @@ app.config['SECRET_KEY'] = '{Your Secret Key}'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+'''
+Class for the user registry/db 
+Columns include username and password
+Functions for:
+-Finding whether a user exists, 
+-Generating a password hash
+-Verifing password hash
+'''
 class User(db.Model):
   
   u_id = db.Column(db.Integer, 
@@ -35,7 +43,14 @@ class User(db.Model):
   
   def check_pass(self, _password):
     return check_password_hash(self.password, _password)
-  
+
+'''
+Class for the movie review registry/db 
+Columns include username, movie name, director, year and score/review
+Functions for:
+-Finding whether a review by a user exists, 
+-Generating a list with all movies reviewed by a user
+'''
 class Movie_review(db.Model):
 
   l_id = db.Column(db.Integer, 
@@ -59,8 +74,13 @@ class Movie_review(db.Model):
   def show_list(cls, username):
       return cls.query.filter_by(username = username)
 
-    
-@app.route("/signup/", methods=["GET", "POST"])
+'''
+Signing-up REST
+Post request collects username and password,
+determines whether the username has been taken or whether the fields are empty
+generates password hash and appends user to the database. 
+'''
+@app.route("/signup/", methods=["POST"])
 def signup():
     if request.method == "POST":
         username = request.form['username'].strip()
@@ -78,7 +98,13 @@ def signup():
         
     return render_template("signup.html")
 
-@app.route("/", methods=["GET", "POST"])
+'''
+logging-in REST
+Post request collects username and password,
+checks the user database for the username, and then compares the 
+password hash to the verified hash of the inserted password
+'''
+@app.route("/", methods=["POST"])
 @app.route("/login/", methods=["GET", "POST"])
 def login():
 
@@ -95,7 +121,23 @@ def login():
             flash("Invalid login")
 
     return render_template("login_form.html")
-                          
+
+'''
+Home Page REST
+
+The home page makes use of the owen wilson wow api to randomly generate
+a movie that owen willson plays in, along with the details of the movie.
+the GET request connects to this external API and collects a random owen movie's details.
+
+the first POST request allows the user to add the randomly generated movie, 
+along with a score, to their list of reviewed movies. 
+
+The second POST request acts as a PUT, and allows the user to change the score of 
+a movie they have previously rated
+
+The third POST request acts as a DELETE, and allows the user to remove their 
+review entry from their list and the website database. 
+'''
 @app.route("/user/<username>/", methods = ["GET", "POST"])
 def user_home(username):
   
