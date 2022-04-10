@@ -1,7 +1,8 @@
-# cloud_computing
+# Group 14 cloud_computing Coursework
 
 A simple and fun web app which allows users to generate random Owen Willson movies and rate them. Rating the moviews will add them to their own private user-specific lists which they can amend by changing scores and deleting entries. This webapp makes use of the Owen Wilson API: https://owen-wilson-wow-api.herokuapp.com/wows/random
 
+hopefully this project can make you go:
 ![Alt Text](https://thumbs.gfycat.com/GoodnaturedUglyGreendarnerdragonfly-max-1mb.gif)
 
 This web app features:
