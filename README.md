@@ -7,10 +7,13 @@ hopefully this project can make you go:
 
 # REST API Functions
 
-The REST API is based on Python's Flask module and SQLAlchemy is used for object-relational mapping. 
+The REST API is based on Python's Flask module and SQLAlchemy is used for object-relational mapping. The Google Cloud Platform is used to deploy the app and to home the persistent databases. 
 
 This web app features:
 1. User accounts (with personal user functions)
 3. Hashed passwords
 4. A Persistent cloud database ( usingGCP)
 5. Dynamically generated REST API
+
+#RESTful Services
+##1
