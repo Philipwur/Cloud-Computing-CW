@@ -4,7 +4,7 @@ from flask_sqlalchemy import sqlalchemy, SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from flask_migrate import Migrate
+from flask_httpauth import HTTPBasicAuth
 
 from flask_restful import Api
 
@@ -14,7 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '{Your Secret Key}'
 
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+auth = HTTPBasicAuth()
 
 '''
 Class for the user registry/db 
@@ -74,6 +74,8 @@ class Movie_review(db.Model):
   def show_list(cls, username):
       return cls.query.filter_by(username = username)
 
+def https_verify(username, password):
+    if check_password_hash()
 '''
 Signing-up REST
 Post request collects username and password,
