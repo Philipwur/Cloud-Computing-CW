@@ -76,7 +76,7 @@
         </style>
         <body>
         
-        <form action="/action_page.php" style="border:1px solid #ccc">
+        <form id="signup" action="{{ url_for('signup')}}" method="post" style="border:1px solid #ccc">
           <div class="container">
             <h1>Sign Up</h1>
             <hr>
@@ -88,7 +88,7 @@
             <input type="password" placeholder="Enter Password" name="psw" required>
 
             <div class="clearfix">
-              <button type="submit" class="signupbtn"><a href="./index.html">Sign Up</a></button>
+              <input type="submit" id="submit" text="Signup" />
             </div>
           </div>
         </form>
