@@ -23,6 +23,7 @@ This web app features:
 5. Dynamically generated REST API
 6. Makes use of an extral database API
 7. Two Unique Datasets (Users and Movie_review)
+8. Advanced HTML Functionality
 
 # RESTful Services
 ### 1 GET
