@@ -52,6 +52,17 @@
   <form class=random action="{{url_for('user_home',username = username)}}" method="get">
   	<input type="submit" value="WOW!" />
   </form>
+	
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+	
 </table>
 	<table border = 3>
 	<tr>
