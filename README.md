@@ -95,4 +95,9 @@ app.py handling:
 
 # Setup
 
-To set up the application you will need to start off by installing python to your machine as well as installing the required packages with the requirments.txt. Once this has been done you can clone the repository using the following command git clone https://github.com/dancrake1/cloud_computing. This will include the application itself as well as the HTML templates reqired to run the app. Using the following command you will be able to run app and display the Web Page WOW!: python3 app.py. The below screenshot shows this being run in the termminal. For the purposes of our app and to ensure the functionality and storage of our databases we have run this within our setup virtual machine within the Google Cloud Platform.
+To set up the application you will need to start off by installing python to your machine as well as installing the required packages with the requirments.txt. Once this has been done you can clone the repository using the following command "git clone https://github.com/dancrake1/cloud_computing". This will include the application itself as well as the HTML templates reqired to run the app. Using the following command you will be able to run app and display the Web Page WOW!: python3 "app.py". The below screenshot shows this being run in the termminal. For the purposes of our app and to ensure the functionality and storage of our databases we have run this within our setup virtual machine within the Google Cloud Platform.
+
+
+![image](https://user-images.githubusercontent.com/103306770/162704469-81b0cbff-7b5d-46a6-a0b8-30e610155a58.png)
+
+
