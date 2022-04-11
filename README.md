@@ -12,9 +12,9 @@ The REST API is based on Python's Flask module and SQLAlchemy is used for object
 This web app features:
 1. User accounts (with personal user functions)
 3. Hashed passwords
-4. A Persistent cloud database ( usingGCP)
+4. A Persistent cloud database (using GCP)
 5. Dynamically generated REST API
-6. makes use of an extral database API
+6. Makes use of an extral database API
 7. Two Unique Datasets (Users and Movie_review)
 
 # RESTful Services
