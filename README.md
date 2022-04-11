@@ -25,7 +25,7 @@ This web app features:
 7. Two Unique Datasets (Users and Movie_review)
 
 # RESTful Services
-#### 1 GET
+### 1 GET
 The GET request is preformed when a the homepage is visited and when the WOW button is pressed. THis function gets a randomly generated owen wilson movie from the extral API.
 
 HTML Form on the homepage:
@@ -36,7 +36,7 @@ app.py handling of the GET method form:
 
 ![image](https://user-images.githubusercontent.com/103308532/162691549-794fef32-d889-4143-864c-2353ce32d15c.png)
 
-#### 2 POST
+### 2 POST
 The web app makes use of 3 POST operations.
 
 The first POST operation is used to allow a user to create an account on the /signup/ route.
@@ -69,7 +69,7 @@ app.py handling of post request:
 
 ![image](https://user-images.githubusercontent.com/103308532/162700493-9af7349e-417e-49b3-9367-3c1c86bf30e2.png)
 
-#### 3 PUT
+### 3 PUT
 
 One PUT request is present to allow for the editing of personal list entries.
 
@@ -81,7 +81,7 @@ app.py handling:
 
 ![image](https://user-images.githubusercontent.com/103308532/162700734-466ded9a-fb9b-4f37-84f1-a7b6476ff287.png)
 
-#### 4 DELETE
+### 4 DELETE
 
 One DELETE request is present to allow for the removal of personal list entries.
 
