@@ -22,15 +22,17 @@ This web app features:
 The GET request is preformed when a the homepage is visited and when the WOW button is pressed. THis function gets a randomly generated owen wilson movie from the extral API.
 
 HTML Form:
+
 ![image](https://user-images.githubusercontent.com/103308532/162691190-e1ce3a82-c061-4959-89e6-527495b674c9.png)
 
 app.py handling of the GET method form:
+
 ![image](https://user-images.githubusercontent.com/103308532/162691549-794fef32-d889-4143-864c-2353ce32d15c.png)
 
 #### 2 POST
 The web app makes use of 3 POST operations.
 
-The first POST operation is used to allow a user to create an account
+The first POST operation is used to allow a user to create an account on the /signup/ route.
 #### 3 PUT
 #### 4 DELETE
 
