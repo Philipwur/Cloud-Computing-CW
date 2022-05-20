@@ -7,7 +7,7 @@ Daniel Crake - 210744246
 
 Philip Wurzner - 210930632
 
-A fun web app which allows users to generate random Owen Willson movies and rate them. Rating the moviews will add them to their own private user-specific lists which they can amend by changing scores and deleting entries. This webapp makes use of the external Owen Wilson API: https://owen-wilson-wow-api.herokuapp.com/wows/random
+A fun web app which allows users to generate random Owen Willson movies and rate them. Rating the movies will add them to their own private user-specific lists which they can amend by changing scores and deleting entries. This webapp makes use of the external Owen Wilson API: https://owen-wilson-wow-api.herokuapp.com/wows/random
 
 Hopefully this project will make you go:
 ![Alt Text](https://thumbs.gfycat.com/GoodnaturedUglyGreendarnerdragonfly-max-1mb.gif)
